@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SkillGap AI</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- ================================================= -->
+<!-- NAVIGATION -->
+<!-- ================================================= -->
+
+<header class="topbar">
+
+    <div class="brand">
+        SkillGap AI
+    </div>
+
+    <nav>
+
+        <a href="/">Home</a>
+
+        <a href="/analyzer">
+            Career Analyzer
+        </a>
+
+        <a href="/resume-analyzer">
+            Resume Intelligence
+        </a>
+
+        <a href="/careers">
+            Careers
+        </a>
+
+        <a href="/resources">
+            Resources
+        </a>
+
+        <a href="/about">
+            About
+        </a>
+
+    </nav>
+
+</header>
+
+
+<!-- ================================================= -->
+<!-- PAGE -->
+<!-- ================================================= -->
+
+<main class="page">
+
+
+<!-- ================================================= -->
+<!-- HOME -->
+<!-- ================================================= -->
+
+{% if page == "home" %}
+
+<section class="hero-dashboard">
+
+    <div class="hero-content">
+
+        <span class="eyebrow">
+            CAREER INTELLIGENCE PLATFORM
+        </span>
+
+        <h1>
+            Build the career
+            <br>
+            you are prepared for.
+        </h1>
+
+        <p>
+            SkillGap AI analyzes your skills and resume,
+            compares them with career requirements and
+            creates a personalized path to improve your profile.
+        </p>
+
+        <div class="hero-actions">
+
+            <a
+                href="/analyzer"
+                class="primary-button"
+            >
+                Analyze Skills
+            </a>
+
+            <a
+                href="/resume-analyzer"
+                class="outline-button"
+            >
+                Analyze Resume
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-panel">
+
+        <div class="panel-label">
+            CAREER INTELLIGENCE
+        </div>
+
+        <div class="metric-large">
+            01
+        </div>
+
+        <h3>
+            Identify your gap.
+        </h3>
+
+        <p>
+            Discover the skills separating
+            your current profile from your
+            target career.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="section-block">
+
+    <div class="section-heading">
+
+        <span>
+            PLATFORM
+        </span>
+
+        <h2>
+            One system for your career decisions.
+        </h2>
+
+    </div>
+
+
+    <div class="feature-grid">
+
+        <a
+            href="/analyzer"
+            class="feature-panel"
+        >
+
+            <span class="feature-number">
+                01
+            </span>
+
+            <h3>
+                Career Skill Gap
+            </h3>
+
+            <p>
+                Compare your existing skills
+                with the requirements of your
+                target career.
+            </p>
+
+            <span class="feature-link">
+                Explore
+            </span>
+
+        </a>
+
+
+        <a
+            href="/resume-analyzer"
+            class="feature-panel"
+        >
+
+            <span class="feature-number">
+                02
+            </span>
+
+            <h3>
+                Resume Intelligence
+            </h3>
+
+            <p>
+                Analyze your PDF resume,
+                calculate ATS compatibility
+                and identify improvement areas.
+            </p>
+
+            <span class="feature-link">
+                Analyze
+            </span>
+
+        </a>
+
+
+        <a
+            href="/careers"
+            class="feature-panel"
+        >
+
+            <span class="feature-number">
+                03
+            </span>
+
+            <h3>
+                Career Explorer
+            </h3>
+
+            <p>
+                Explore required skills,
+                salaries, companies and
+                career advantages.
+            </p>
+
+            <span class="feature-link">
+                Explore
+            </span>
+
+        </a>
+
+
+        <a
+            href="/resources"
+            class="feature-panel"
+        >
+
+            <span class="feature-number">
+                04
+            </span>
+
+            <h3>
+                Learning Hub
+            </h3>
+
+            <p>
+                Find free learning resources
+                for the skills you need to develop.
+            </p>
+
+            <span class="feature-link">
+                Learn
+            </span>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<section class="process-section">
+
+    <div class="section-heading">
+
+        <span>
+            PROCESS
+        </span>
+
+        <h2>
+            From current profile to career readiness.
+        </h2>
+
+    </div>
+
+
+    <div class="timeline">
+
+        <div>
+            <strong>01</strong>
+            <h3>Profile</h3>
+            <p>Identify your current skills.</p>
+        </div>
+
+        <div>
+            <strong>02</strong>
+            <h3>Compare</h3>
+            <p>Compare them with job requirements.</p>
+        </div>
+
+        <div>
+            <strong>03</strong>
+            <h3>Diagnose</h3>
+            <p>Find missing skills and resume gaps.</p>
+        </div>
+
+        <div>
+            <strong>04</strong>
+            <h3>Improve</h3>
+            <p>Follow your personalized roadmap.</p>
+        </div>
+
+    </div>
+
+</section>
+
+{% endif %}
+
+
+<!-- ================================================= -->
+<!-- CAREER ANALYZER -->
+<!-- ================================================= -->
+
+{% if page == "analyzer" %}
+
+<section class="page-header">
+
+    <span>
+        CAREER ANALYZER
+    </span>
+
+    <h1>
+        Measure your skill gap.
+    </h1>
+
+    <p>
+        Select a career and tell SkillGap AI
+        what you already know.
+    </p>
+
+</section>
+
+
+<form
+    method="POST"
+    class="analysis-layout"
+>
+
+
+    <div class="analysis-form">
+
+        <label>
+            Target Career
+        </label>
+
+        <select
+            name="job"
+            required
+        >
+
+            {% for job in careers %}
+
+            <option value="{{ job }}">
+                {{ job }}
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+
+        <label>
+            Current Skills
+        </label>
+
+        <div class="skills-box">
+
+            {% for skill in all_skills %}
+
+            <label class="skill-option">
+
+                <input
+                    type="checkbox"
+                    name="skills"
+                    value="{{ skill }}"
+                >
+
+                <span>
+                    {{ skill }}
+                </span>
+
+            </label>
+
+            {% endfor %}
+
+        </div>
+
+
+        <label>
+            Additional Skills
+        </label>
+
+        <input
+            type="text"
+            name="additional_skills"
+            placeholder="Example: Python, SQL, Docker"
+        >
+
+
+        <button
+            type="submit"
+            class="primary-button"
+        >
+            Analyze Skill Gap
+        </button>
+
+    </div>
+
+
+</form>
+
+
+{% if result %}
+
+<section class="results-dashboard">
+
+    <div class="result-heading">
+
+        <span>
+            ANALYSIS RESULT
+        </span>
+
+        <h2>
+            {{ result.job }}
+        </h2>
+
+    </div>
+
+
+    <div class="stat-grid">
+
+        <div class="stat-card">
+
+            <span>
+                READINESS
+            </span>
+
+            <strong>
+                {{ result.readiness_score }}%
+            </strong>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span>
+                MATCHED
+            </span>
+
+            <strong>
+                {{ result.available_skills|length }}
+            </strong>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span>
+                MISSING
+            </span>
+
+            <strong>
+                {{ result.missing_skills|length }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <div class="result-columns">
+
+        <div class="result-panel">
+
+            <h3>
+                Skills You Have
+            </h3>
+
+            {% for skill in result.available_skills %}
+
+            <div class="skill-row matched">
+                {{ skill }}
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <div class="result-panel">
+
+            <h3>
+                Skills To Develop
+            </h3>
+
+            {% for skill in result.missing_skills %}
+
+            <div class="skill-row missing">
+                {{ skill }}
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endif %}
+
+{% endif %}
+
+
+<!-- ================================================= -->
+<!-- RESUME ANALYZER -->
+<!-- ================================================= -->
+
+{% if page == "resume_analyzer" %}
+
+<section class="page-header">
+
+    <span>
+        RESUME INTELLIGENCE
+    </span>
+
+    <h1>
+        Understand how your resume
+        performs for a job.
+    </h1>
+
+    <p>
+        Upload your resume and optionally paste
+        a job description for a deeper comparison.
+    </p>
+
+</section>
+
+
+<form
+    method="POST"
+    enctype="multipart/form-data"
+    class="resume-form"
+>
+
+
+    <div class="form-section">
+
+        <label>
+            Target Career
+        </label>
+
+        <select
+            name="job"
+            required
+        >
+
+            {% for job in careers %}
+
+            <option value="{{ job }}">
+                {{ job }}
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+    </div>
+
+
+    <div class="form-section">
+
+        <label>
+            Resume PDF
+        </label>
+
+        <div class="upload-area">
+
+            <input
+                type="file"
+                name="resume"
+                accept=".pdf"
+                required
+            >
+
+            <p>
+                Upload a text-based PDF resume.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="form-section">
+
+        <label>
+            Job Description
+        </label>
+
+        <textarea
+            name="job_description"
+            rows="9"
+            placeholder="Paste the job description here for a deeper ATS and keyword comparison."
+        ></textarea>
+
+    </div>
+
+
+    <button
+        type="submit"
+        class="primary-button"
+    >
+        Analyze Resume
+    </button>
+
+
+</form>
+
+
+{% if error %}
+
+<div class="error-box">
+    {{ error }}
+</div>
+
+{% endif %}
+
+
+{% if result %}
+
+<section class="resume-results">
+
+
+    <!-- TOP METRICS -->
+
+    <div class="resume-title">
+
+        <span>
+            RESUME REPORT
+        </span>
+
+        <h2>
+            {{ result.job }}
+        </h2>
+
+    </div>
+
+
+    <div class="resume-stats">
+
+
+        <div class="big-stat">
+
+            <span>
+                ATS SCORE
+            </span>
+
+            <strong>
+                {{ result.ats_score }}%
+            </strong>
+
+            <div class="progress">
+
+                <div
+                    style="width: {{ result.ats_score }}%"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <div class="big-stat">
+
+            <span>
+                JOB SUITABILITY
+            </span>
+
+            <strong>
+                {{ result.suitability }}
+            </strong>
+
+        </div>
+
+
+        <div class="big-stat">
+
+            <span>
+                RESUME WORDS
+            </span>
+
+            <strong>
+                {{ result.word_count }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- SKILLS -->
+
+    <div class="result-columns">
+
+
+        <div class="result-panel">
+
+            <div class="panel-heading">
+
+                <span>
+                    STRENGTHS
+                </span>
+
+                <h3>
+                    Matched Skills
+                </h3>
+
+            </div>
+
+
+            {% for skill in result.matched_skills %}
+
+            <div class="skill-row matched">
+
+                <strong>
+                    {{ skill }}
+                </strong>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <div class="result-panel">
+
+            <div class="panel-heading">
+
+                <span>
+                    SKILL GAP
+                </span>
+
+                <h3>
+                    Missing Skills
+                </h3>
+
+            </div>
+
+
+            {% for skill in result.missing_skills %}
+
+            <div class="skill-row missing">
+
+                <strong>
+                    {{ skill }}
+                </strong>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+    </div>
+
+
+    <!-- EVIDENCE -->
+
+    <div class="wide-panel">
+
+        <div class="panel-heading">
+
+            <span>
+                EVIDENCE DETECTOR
+            </span>
+
+            <h2>
+                Where your skills appear in the resume.
+            </h2>
+
+        </div>
+
+
+        {% for skill, evidence in result.evidence.items() %}
+
+        <div class="evidence-row">
+
+            <strong>
+                {{ skill }}
+            </strong>
+
+            <p>
+                {{ evidence }}
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- ROADMAP -->
+
+    <div class="wide-panel">
+
+        <div class="panel-heading">
+
+            <span>
+                CAREER ROADMAP
+            </span>
+
+            <h2>
+                Your path from current profile to target role.
+            </h2>
+
+        </div>
+
+
+        <div class="roadmap">
+
+            {% for item in result.roadmap %}
+
+            <div class="roadmap-item">
+
+                <div class="roadmap-number">
+                    {{ item.step }}
+                </div>
+
+                <div>
+
+                    <strong>
+                        {{ item.skill }}
+                    </strong>
+
+                    <p>
+                        {{ item.status }}
+                    </p>
+
+                </div>
+
+                <span class="priority">
+                    {{ item.priority }}
+                </span>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- WHAT IF -->
+
+    <div class="wide-panel">
+
+        <div class="panel-heading">
+
+            <span>
+                WHAT-IF SIMULATOR
+            </span>
+
+            <h2>
+                See how learning missing skills could improve your profile.
+            </h2>
+
+        </div>
+
+
+        {% for item in result.simulations %}
+
+        <div class="simulation-row">
+
+            <div>
+
+                <strong>
+                    Learn {{ item.skill }}
+                </strong>
+
+            </div>
+
+            <div class="simulation-score">
+
+                {{ item.score }}%
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- SUGGESTIONS -->
+
+    <div class="wide-panel">
+
+        <div class="panel-heading">
+
+            <span>
+                RESUME OPTIMIZATION
+            </span>
+
+            <h2>
+                Recommended changes
+            </h2>
+
+        </div>
+
+
+        <div class="suggestion-list">
+
+            {% for suggestion in result.suggestions %}
+
+            <div class="suggestion">
+
+                <span>
+                    {{ loop.index }}
+                </span>
+
+                <p>
+                    {{ suggestion }}
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+</section>
+
+{% endif %}
+
+{% endif %}
+
+
+<!-- ================================================= -->
+<!-- CAREERS -->
+<!-- ================================================= -->
+
+{% if page == "careers" %}
+
+<section class="page-header">
+
+    <span>
+        CAREER EXPLORER
+    </span>
+
+    <h1>
+        Explore your possible career paths.
+    </h1>
+
+</section>
+
+
+<div class="career-grid">
+
+    {% for job, info in careers.items() %}
+
+    <a
+        href="{{ url_for('career_details', job=job) }}"
+        class="career-item"
+    >
+
+        <span>
+            {{ "%02d"|format(loop.index) }}
+        </span>
+
+        <h2>
+            {{ job }}
+        </h2>
+
+        <p>
+            {{ info.description }}
+        </p>
+
+        <strong>
+            View career profile
+        </strong>
+
+    </a>
+
+    {% endfor %}
+
+</div>
+
+{% endif %}
+
+
+<!-- ================================================= -->
+<!-- CAREER DETAILS -->
+<!-- ================================================= -->
+
+{% if page == "career_details" %}
+
+<section class="career-profile">
+
+    <span>
+        CAREER PROFILE
+    </span>
+
+    <h1>
+        {{ job }}
+    </h1>
+
+    <p class="career-description">
+        {{ career.description }}
+    </p>
+
+
+    <div class="career-info-grid">
+
+
+        <div>
+
+            <h3>
+                Required Skills
+            </h3>
+
+            {% for skill in career.skills %}
+
+            <div class="detail-row">
+                {{ skill }}
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <div>
+
+            <h3>
+                Average Salary
+            </h3>
+
+            <div class="salary-box">
+                {{ career.salary }}
+            </div>
+
+
+            <h3>
+                Top Companies
+            </h3>
+
+            {% for company in career.companies %}
+
+            <div class="detail-row">
+                {{ company }}
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <a
+        href="/analyzer"
+        class="primary-button"
+    >
+        Analyze My Skills
+    </a>
+
+</section>
+
+{% endif %}
+
+
+<!-- ================================================= -->
+<!-- RESOURCES -->
+<!-- ================================================= -->
+
+{% if page == "resources" %}
+
+<section class="page-header">
+
+    <span>
+        LEARNING HUB
+    </span>
+
+    <h1>
+        Build the skills you are missing.
+    </h1>
+
+</section>
+
+
+<div class="resource-grid">
+
+    {% for skill, links in resources.items() %}
+
+    <div class="resource-item">
+
+        <span>
+            SKILL
+        </span>
+
+        <h2>
+            {{ skill }}
+        </h2>
+
+
+        <a
+            href="{{ links.youtube }}"
+            target="_blank"
+        >
+            YouTube
+        </a>
+
+
+        <a
+            href="{{ links.course }}"
+            target="_blank"
+        >
+            Free Resource
+        </a>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endif %}
+
+
+<!-- ================================================= -->
+<!-- ABOUT -->
+<!-- ================================================= -->
+
+{% if page == "about" %}
+
+<section class="about-page">
+
+    <span>
+        ABOUT
+    </span>
+
+    <h1>
+        SkillGap AI
+    </h1>
+
+    <p>
+        A career intelligence platform designed
+        to help students and professionals understand
+        their skills, resumes and career readiness.
+    </p>
+
+
+    <div class="about-grid">
+
+        <div>
+
+            <h3>
+                Skill Analysis
+            </h3>
+
+            <p>
+                Identify the skills you already have
+                and discover what your target career requires.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h3>
+                Resume Intelligence
+            </h3>
+
+            <p>
+                Analyze resume structure, skills,
+                keywords and ATS compatibility.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h3>
+                Career Roadmap
+            </h3>
+
+            <p>
+                Create a step-by-step path from your
+                current profile toward your target role.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endif %}
+
+
+</main>
+
+
+<footer>
+
+    <strong>
+        SkillGap AI
+    </strong>
+
+    <span>
+        Career Intelligence Platform
+    </span>
+
+</footer>
+
+
+</body>
+</html>
