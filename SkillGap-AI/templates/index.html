@@ -1,0 +1,3189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {{ project_name|default("AI-Powered Career Skill Gap Analyzer") }}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+
+<body>
+
+<!-- ============================================================
+     NAVIGATION
+============================================================ -->
+
+<header class="topbar">
+
+    <div class="container nav-inner">
+
+        <a
+            href="{{ url_for('home') }}"
+            class="brand"
+        >
+            AI Career Analyzer
+        </a>
+
+        <nav class="nav-links">
+
+            <a href="{{ url_for('home') }}">
+                HOME
+            </a>
+
+            <a href="{{ url_for('resume_analyzer') }}">
+                RESUME ANALYZER
+            </a>
+
+            <a href="{{ url_for('careers_resources') }}">
+                CAREERS &amp; RESOURCES
+            </a>
+
+            <a href="{{ url_for('live_jobs') }}">
+                LIVE JOBS
+            </a>
+
+            {% if user %}
+
+                <a href="{{ url_for('history') }}">
+                    HISTORY
+                </a>
+
+                <a href="{{ url_for('logout') }}">
+                    LOGOUT
+                </a>
+
+            {% else %}
+
+                <a href="{{ url_for('login') }}">
+                    LOGIN
+                </a>
+
+                <a
+                    href="{{ url_for('register') }}"
+                    class="nav-register"
+                >
+                    REGISTER
+                </a>
+
+            {% endif %}
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- ============================================================
+     MAIN CONTENT
+============================================================ -->
+
+<main>
+
+    <!-- Flash Messages -->
+
+    <div class="container">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                <div class="flash-container">
+
+                    {% for category, message in messages %}
+
+                        <div class="flash {{ category }}">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+        {% endwith %}
+
+    </div>
+
+
+    <!-- ========================================================
+         HOME
+    ========================================================= -->
+
+    {% if page == "home" %}
+
+        <section class="hero">
+
+            <div class="container hero-grid">
+
+                <div class="hero-content">
+
+                    <span class="eyebrow">
+                        AI CAREER INTELLIGENCE PLATFORM
+                    </span>
+
+                    <h1>
+                        AI-Powered Career
+                        <span>Skill Gap Analyzer</span>
+                    </h1>
+
+                    <p>
+                        Analyze your resume and skills, discover career
+                        gaps, improve your ATS readiness, explore learning
+                        resources and find relevant job opportunities.
+                    </p>
+
+                    <div class="hero-actions">
+
+                        <a
+                            href="{{ url_for('resume_analyzer') }}"
+                            class="btn primary"
+                        >
+                            Analyze My Resume
+                        </a>
+
+                        <a
+                            href="{{ url_for('analyzer_page') }}"
+                            class="btn secondary"
+                        >
+                            Analyze Skills
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hero-card">
+
+                    <div class="hero-card-top">
+                        CAREER INTELLIGENCE
+                    </div>
+
+                    <h2>
+                        Resume + Skills + AI + Jobs
+                    </h2>
+
+                    <p>
+                        One platform to understand your current skills,
+                        identify career gaps and plan your next steps.
+                    </p>
+
+                    <div class="hero-stat-grid">
+
+                        <div>
+                            <strong>ATS</strong>
+                            <span>Analysis</span>
+                        </div>
+
+                        <div>
+                            <strong>AI</strong>
+                            <span>Insights</span>
+                        </div>
+
+                        <div>
+                            <strong>LIVE</strong>
+                            <span>Jobs</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FEATURES -->
+
+        <section class="section">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <span class="eyebrow">
+                        PLATFORM FEATURES
+                    </span>
+
+                    <h2>
+                        Everything you need for your career preparation.
+                    </h2>
+
+                </div>
+
+
+                <div class="feature-grid six">
+
+
+                    <!-- Resume Analysis -->
+
+                    <a
+                        href="{{ url_for('resume_analyzer') }}"
+                        class="feature-card"
+                    >
+
+                        <span class="feature-number">
+                            01
+                        </span>
+
+                        <div class="feature-icon">
+                            📄
+                        </div>
+
+                        <h3>
+                            Resume Analysis
+                        </h3>
+
+                        <p>
+                            Upload your resume and analyze skills,
+                            evidence, ATS readiness and career gaps.
+                        </p>
+
+                        <strong>
+                            Analyze Resume →
+                        </strong>
+
+                    </a>
+
+
+                    <!-- AI Analysis -->
+
+                    <a
+                        href="{{ url_for('resume_analyzer') }}"
+                        class="feature-card"
+                    >
+
+                        <span class="feature-number">
+                            02
+                        </span>
+
+                        <div class="feature-icon">
+                            🤖
+                        </div>
+
+                        <h3>
+                            AI-Powered Analysis
+                        </h3>
+
+                        <p>
+                            Get contextual AI insights, strengths,
+                            gaps and practical recommendations.
+                        </p>
+
+                        <strong>
+                            Use AI Analysis →
+                        </strong>
+
+                    </a>
+
+
+                    <!-- ATS -->
+
+                    <a
+                        href="{{ url_for('resume_analyzer') }}"
+                        class="feature-card"
+                    >
+
+                        <span class="feature-number">
+                            03
+                        </span>
+
+                        <div class="feature-icon">
+                            📊
+                        </div>
+
+                        <h3>
+                            ATS Analysis
+                        </h3>
+
+                        <p>
+                            Check how well your resume matches the
+                            selected career and job requirements.
+                        </p>
+
+                        <strong>
+                            Check ATS →
+                        </strong>
+
+                    </a>
+
+
+                    <!-- Career Roadmap -->
+
+                    <a
+                        href="{{ url_for('careers_resources') }}"
+                        class="feature-card"
+                    >
+
+                        <span class="feature-number">
+                            04
+                        </span>
+
+                        <div class="feature-icon">
+                            🧭
+                        </div>
+
+                        <h3>
+                            Career Roadmap
+                        </h3>
+
+                        <p>
+                            Explore required skills, career progression
+                            and learning priorities.
+                        </p>
+
+                        <strong>
+                            Explore Roadmaps →
+                        </strong>
+
+                    </a>
+
+
+                    <!-- Resume Rewriting -->
+
+                    <a
+                        href="{{ url_for('resume_analyzer') }}"
+                        class="feature-card"
+                    >
+
+                        <span class="feature-number">
+                            05
+                        </span>
+
+                        <div class="feature-icon">
+                            ✍️
+                        </div>
+
+                        <h3>
+                            AI Resume Rewriting
+                        </h3>
+
+                        <p>
+                            Improve resume wording while preserving
+                            the facts from your original resume.
+                        </p>
+
+                        <strong>
+                            Rewrite Resume →
+                        </strong>
+
+                    </a>
+
+
+                    <!-- Live Jobs -->
+
+                    <a
+                        href="{{ url_for('live_jobs') }}"
+                        class="feature-card"
+                    >
+
+                        <span class="feature-number">
+                            06
+                        </span>
+
+                        <div class="feature-icon">
+                            💼
+                        </div>
+
+                        <h3>
+                            Live Jobs
+                        </h3>
+
+                        <p>
+                            Search current job listings by role,
+                            skill and Kerala district.
+                        </p>
+
+                        <strong>
+                            Find Jobs →
+                        </strong>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- HOW IT WORKS -->
+
+        <section class="section soft-section">
+
+            <div class="container">
+
+                <div class="section-heading centered">
+
+                    <span class="eyebrow">
+                        HOW IT WORKS
+                    </span>
+
+                    <h2>
+                        From resume to career roadmap.
+                    </h2>
+
+                </div>
+
+
+                <div class="steps-grid">
+
+                    <div class="step-card">
+
+                        <span>
+                            01
+                        </span>
+
+                        <h3>
+                            Upload
+                        </h3>
+
+                        <p>
+                            Upload your PDF, DOCX or image resume.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step-card">
+
+                        <span>
+                            02
+                        </span>
+
+                        <h3>
+                            Analyze
+                        </h3>
+
+                        <p>
+                            Identify your skills and compare them
+                            with career requirements.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step-card">
+
+                        <span>
+                            03
+                        </span>
+
+                        <h3>
+                            Improve
+                        </h3>
+
+                        <p>
+                            Follow personalized recommendations
+                            and learning resources.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step-card">
+
+                        <span>
+                            04
+                        </span>
+
+                        <h3>
+                            Apply
+                        </h3>
+
+                        <p>
+                            Explore career opportunities and live jobs.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    <!-- ========================================================
+         CAREER ANALYZER
+    ========================================================= -->
+
+    {% elif page == "analyzer" %}
+
+        <section class="page-header">
+
+            <div class="container">
+
+                <span class="eyebrow">
+                    CAREER ANALYZER
+                </span>
+
+                <h1>
+                    Analyze Your Skill Gap
+                </h1>
+
+                <p>
+                    Select a target career and choose the skills
+                    you already know.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="section">
+
+            <div class="container">
+
+                <form
+                    method="POST"
+                    class="panel form-panel"
+                >
+
+                    <div class="form-group">
+
+                        <label for="target-job">
+                            Target Career
+                        </label>
+
+                        <select
+                            name="job"
+                            id="target-job"
+                            required
+                        >
+
+                            <option value="">
+                                Select a career
+                            </option>
+
+                            {% for job in careers %}
+
+                                <option
+                                    value="{{ job }}"
+                                    {% if request.form.get('job') == job %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ job }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="skill-selector">
+
+                        <div class="skill-selector-header">
+
+                            <div>
+
+                                <h3>
+                                    Skill Analyzer
+                                </h3>
+
+                                <p>
+                                    Select the skills you already have.
+                                </p>
+
+                            </div>
+
+                            <div class="skill-actions">
+
+                                <button
+                                    type="button"
+                                    class="small-btn"
+                                    id="select-all-skills"
+                                >
+                                    Select All
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="small-btn"
+                                    id="clear-skills"
+                                >
+                                    Clear
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="skill-search">
+
+                            <input
+                                type="search"
+                                id="skill-search"
+                                placeholder="Search skills..."
+                            >
+
+                        </div>
+
+
+                        <div
+                            class="skill-grid"
+                            id="skill-grid"
+                        >
+
+                            {% for skill in all_skills %}
+
+                                <label
+                                    class="skill-option"
+                                    data-skill="{{ skill|lower }}"
+                                >
+
+                                    <input
+                                        type="checkbox"
+                                        name="skills"
+                                        value="{{ skill }}"
+                                        {% if skill in selected_skills %}
+                                            checked
+                                        {% endif %}
+                                    >
+
+                                    <span>
+                                        {{ skill }}
+                                    </span>
+
+                                </label>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="additional-skills">
+                            Additional Skills
+                        </label>
+
+                        <input
+                            type="text"
+                            name="additional_skills"
+                            id="additional-skills"
+                            placeholder="Example: Power BI, PyTorch, Java"
+                        >
+
+                        <small>
+                            Separate multiple skills with commas.
+                        </small>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn primary"
+                    >
+                        Analyze Skill Gap
+                    </button>
+
+                </form>
+
+
+                {% if error %}
+
+                    <div class="flash error">
+                        {{ error }}
+                    </div>
+
+                {% endif %}
+
+
+                {% if result %}
+
+                    <section class="section-small">
+
+                        <div class="score-grid">
+
+                            <div class="score-card">
+
+                                <span>
+                                    CAREER READINESS
+                                </span>
+
+                                <strong>
+                                    {{ result.readiness_score }}%
+                                </strong>
+
+                                <small>
+                                    Skill coverage
+                                </small>
+
+                            </div>
+
+
+                            <div class="score-card">
+
+                                <span>
+                                    MATCHED
+                                </span>
+
+                                <strong>
+                                    {{ result.matched_skills|length }}
+                                </strong>
+
+                                <small>
+                                    Skills found
+                                </small>
+
+                            </div>
+
+
+                            <div class="score-card">
+
+                                <span>
+                                    MISSING
+                                </span>
+
+                                <strong>
+                                    {{ result.missing_skills|length }}
+                                </strong>
+
+                                <small>
+                                    Skills to learn
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="two-column">
+
+                            <div class="panel">
+
+                                <h2>
+                                    Matched Skills
+                                </h2>
+
+                                <div class="chips">
+
+                                    {% for skill in result.matched_skills %}
+
+                                        <span class="chip good">
+                                            {{ skill }}
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="muted">
+                                            No matched skills yet.
+                                        </span>
+
+                                    {% endfor %}
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="panel">
+
+                                <h2>
+                                    Missing Skills
+                                </h2>
+
+                                <div class="chips">
+
+                                    {% for skill in result.missing_skills %}
+
+                                        <span class="chip missing">
+                                            {{ skill }}
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="muted">
+                                            No missing skills identified.
+                                        </span>
+
+                                    {% endfor %}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="panel">
+
+                            <h2>
+                                Learning Roadmap
+                            </h2>
+
+                            <div class="roadmap">
+
+                                {% for item in result.roadmap %}
+
+                                    <div class="roadmap-item">
+
+                                        <div class="roadmap-number">
+                                            {{ item.step }}
+                                        </div>
+
+                                        <div>
+
+                                            <h3>
+                                                {{ item.title }}
+                                            </h3>
+
+                                            <p>
+                                                {{ item.description }}
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+    <!-- ========================================================
+         RESUME ANALYZER
+    ========================================================= -->
+
+    {% elif page == "resume_analyzer" %}
+
+        <section class="page-header">
+
+            <div class="container">
+
+                <span class="eyebrow">
+                    RESUME INTELLIGENCE
+                </span>
+
+                <h1>
+                    Analyze Your Resume
+                </h1>
+
+                <p>
+                    Upload your resume and compare it with your
+                    target career.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="section">
+
+            <div class="container">
+
+                <form
+                    method="POST"
+                    enctype="multipart/form-data"
+                    class="panel form-panel"
+                >
+
+                    <div class="form-group">
+
+                        <label for="resume-job">
+                            Target Career
+                        </label>
+
+                        <select
+                            name="job"
+                            id="resume-job"
+                            required
+                        >
+
+                            <option value="">
+                                Select a career
+                            </option>
+
+                            {% for job in careers %}
+
+                                <option value="{{ job }}">
+                                    {{ job }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="resume">
+                            Upload Resume
+                        </label>
+
+                        <input
+                            type="file"
+                            name="resume"
+                            id="resume"
+                            accept=".pdf,.docx,.png,.jpg,.jpeg"
+                            required
+                        >
+
+                        <small>
+                            Supported formats:
+                            PDF, DOCX, PNG, JPG and JPEG.
+                            Maximum size: 10 MB.
+                        </small>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="job-description">
+                            Optional Job Description
+                        </label>
+
+                        <textarea
+                            name="job_description"
+                            id="job-description"
+                            rows="8"
+                            placeholder="Paste the job description here for more targeted ATS and skill analysis..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn primary"
+                    >
+                        Analyze Resume
+                    </button>
+
+                </form>
+
+
+                {% if error %}
+
+                    <div class="flash error">
+                        {{ error }}
+                    </div>
+
+                {% endif %}
+
+
+                {% if result %}
+
+                    <!-- SCORE CARDS -->
+
+                    <section
+                        class="section-small"
+                        id="ats-analysis"
+                    >
+
+                        <div class="score-grid">
+
+                            <div class="score-card">
+
+                                <span>
+                                    ATS SCORE
+                                </span>
+
+                                <strong>
+                                    {{ result.ats_score }}%
+                                </strong>
+
+                                <small>
+                                    Resume compatibility
+                                </small>
+
+                            </div>
+
+
+                            <div class="score-card">
+
+                                <span>
+                                    CAREER READINESS
+                                </span>
+
+                                <strong>
+                                    {{ result.readiness_score }}%
+                                </strong>
+
+                                <small>
+                                    Skill coverage
+                                </small>
+
+                            </div>
+
+
+                            <div class="score-card">
+
+                                <span>
+                                    WORD COUNT
+                                </span>
+
+                                <strong>
+                                    {{ result.word_count }}
+                                </strong>
+
+                                <small>
+                                    Extracted resume words
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- AI ANALYSIS -->
+
+                    <section
+                        class="panel"
+                        id="ai-analysis"
+                    >
+
+                        <div class="panel-heading">
+
+                            <div>
+
+                                <span class="eyebrow">
+                                    AI INSIGHTS
+                                </span>
+
+                                <h2>
+                                    AI-Powered Analysis
+                                </h2>
+
+                            </div>
+
+                            <span class="status-badge">
+                                {{ result.ai_status }}
+                            </span>
+
+                        </div>
+
+
+                        {% if result.ai %}
+
+                            <p class="large-text">
+                                {{ result.ai.summary }}
+                            </p>
+
+
+                            <div class="two-column">
+
+                                <div>
+
+                                    <h3>
+                                        Strengths
+                                    </h3>
+
+                                    <ul class="clean-list">
+
+                                        {% for item in result.ai.strengths %}
+
+                                            <li>
+                                                {{ item }}
+                                            </li>
+
+                                        {% else %}
+
+                                            <li>
+                                                No specific strengths identified.
+                                            </li>
+
+                                        {% endfor %}
+
+                                    </ul>
+
+                                </div>
+
+
+                                <div>
+
+                                    <h3>
+                                        Gaps
+                                    </h3>
+
+                                    <ul class="clean-list">
+
+                                        {% for item in result.ai.gaps %}
+
+                                            <li>
+                                                {{ item }}
+                                            </li>
+
+                                        {% else %}
+
+                                            <li>
+                                                No specific gaps identified.
+                                            </li>
+
+                                        {% endfor %}
+
+                                    </ul>
+
+                                </div>
+
+                            </div>
+
+
+                            <h3>
+                                Recommendations
+                            </h3>
+
+                            <ul class="clean-list">
+
+                                {% for item in result.ai.recommendations %}
+
+                                    <li>
+                                        {{ item }}
+                                    </li>
+
+                                {% endfor %}
+
+                            </ul>
+
+                        {% endif %}
+
+                    </section>
+
+
+                    <!-- MATCHED / MISSING -->
+
+                    <section class="two-column section-small">
+
+                        <div class="panel">
+
+                            <h2>
+                                Matched Skills
+                            </h2>
+
+                            <div class="chips">
+
+                                {% for skill in result.matched_skills %}
+
+                                    <span class="chip good">
+                                        {{ skill }}
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="muted">
+                                        No matched skills detected.
+                                    </span>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="panel">
+
+                            <h2>
+                                Missing Skills
+                            </h2>
+
+                            <div class="chips">
+
+                                {% for skill in result.missing_skills %}
+
+                                    <span class="chip missing">
+                                        {{ skill }}
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="muted">
+                                        No missing skills identified.
+                                    </span>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- EVIDENCE -->
+
+                    <section class="panel">
+
+                        <h2>
+                            Resume Evidence
+                        </h2>
+
+                        {% if result.evidence %}
+
+                            <div class="evidence-list">
+
+                                {% for skill, lines in result.evidence.items() %}
+
+                                    <div class="evidence-item">
+
+                                        <h3>
+                                            {{ skill }}
+                                        </h3>
+
+                                        {% for line in lines %}
+
+                                            <p>
+                                                {{ line }}
+                                            </p>
+
+                                        {% endfor %}
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                        {% else %}
+
+                            <p class="muted">
+                                No direct evidence was extracted.
+                            </p>
+
+                        {% endif %}
+
+                    </section>
+
+
+                    <!-- SUGGESTIONS -->
+
+                    <section class="panel">
+
+                        <h2>
+                            Resume Improvement Suggestions
+                        </h2>
+
+                        <ul class="clean-list">
+
+                            {% for suggestion in result.suggestions %}
+
+                                <li>
+                                    {{ suggestion }}
+                                </li>
+
+                            {% endfor %}
+
+                        </ul>
+
+                    </section>
+
+
+                    <!-- ROADMAP -->
+
+                    <section class="panel">
+
+                        <h2>
+                            Career Roadmap
+                        </h2>
+
+                        <div class="roadmap">
+
+                            {% for item in result.roadmap %}
+
+                                <div class="roadmap-item">
+
+                                    <div class="roadmap-number">
+                                        {{ item.step }}
+                                    </div>
+
+                                    <div>
+
+                                        <h3>
+                                            {{ item.title }}
+                                        </h3>
+
+                                        <p>
+                                            {{ item.description }}
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- LEARNING RESOURCES -->
+
+                    <section class="panel">
+
+                        <h2>
+                            Learning Resources
+                        </h2>
+
+                        {% if result.resources %}
+
+                            <div class="resource-list">
+
+                                {% for skill, links in result.resources.items() %}
+
+                                    <div class="resource-item">
+
+                                        <div>
+
+                                            <h3>
+                                                {{ skill }}
+                                            </h3>
+
+                                        </div>
+
+                                        <div class="resource-links">
+
+                                            {% for resource in links %}
+
+                                                <a
+                                                    href="{{ resource.url }}"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="resource-link"
+                                                >
+                                                    {{ resource.name }}
+                                                </a>
+
+                                            {% endfor %}
+
+                                        </div>
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                        {% else %}
+
+                            <p class="muted">
+                                No resource links were found for the
+                                identified missing skills.
+                            </p>
+
+                        {% endif %}
+
+                    </section>
+
+
+                    <!-- AI RESUME REWRITE -->
+
+                    <section
+                        class="panel rewrite-panel"
+                        id="resume-rewriting"
+                    >
+
+                        <div class="panel-heading">
+
+                            <div>
+
+                                <span class="eyebrow">
+                                    AI WRITING ASSISTANT
+                                </span>
+
+                                <h2>
+                                    AI Resume Rewriting
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+                        <p>
+                            Improve your resume wording while keeping
+                            the facts from your original resume.
+                        </p>
+
+
+                        <button
+                            type="button"
+                            class="btn primary"
+                            id="rewrite-resume-btn"
+                        >
+                            Rewrite My Resume
+                        </button>
+
+
+                        <div
+                            id="rewrite-loading"
+                            class="loading-message hidden"
+                        >
+                            Generating improved resume content...
+                        </div>
+
+
+                        <div
+                            id="rewrite-error"
+                            class="flash error hidden"
+                        ></div>
+
+
+                        <div
+                            id="rewrite-result"
+                            class="rewrite-result hidden"
+                        ></div>
+
+
+                        <!-- Data is stored in HTML attributes rather
+                             than directly inside JavaScript, avoiding
+                             Jinja/CSS/JS parser errors. -->
+
+                        <textarea
+                            id="rewrite-resume-text"
+                            class="hidden"
+                        >{{ result.resume_text }}</textarea>
+
+                        <input
+                            type="hidden"
+                            id="rewrite-target-job"
+                            value="{{ result.target_job }}"
+                        >
+
+                        <textarea
+                            id="rewrite-job-description"
+                            class="hidden"
+                        >{{ request.form.get('job_description', '') }}</textarea>
+
+                    </section>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+    <!-- ========================================================
+         CAREERS & RESOURCES
+    ========================================================= -->
+
+    {% elif page == "careers_resources" %}
+
+        <section class="page-header">
+
+            <div class="container">
+
+                <span class="eyebrow">
+                    CAREERS &amp; RESOURCES
+                </span>
+
+                <h1>
+                    Explore Career Paths
+                </h1>
+
+                <p>
+                    Compare career requirements and find learning
+                    resources for individual skills.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section
+            class="section"
+            id="career-roadmaps"
+        >
+
+            <div class="container">
+
+                <div class="career-grid">
+
+                    {% for career in career_items %}
+
+                        <article class="career-card">
+
+                            <div class="career-card-header">
+
+                                <span class="career-icon">
+                                    💼
+                                </span>
+
+                                <h2>
+                                    {{ career.title }}
+                                </h2>
+
+                            </div>
+
+
+                            <p>
+                                {{ career.description }}
+                            </p>
+
+
+                            <div class="career-info">
+
+                                <strong>
+                                    Salary Range
+                                </strong>
+
+                                <span>
+                                    {{ career.salary }}
+                                </span>
+
+                            </div>
+
+
+                            <h3>
+                                Required Skills
+                            </h3>
+
+                            <div class="chips">
+
+                                {% for skill in career.skills %}
+
+                                    <span class="chip">
+                                        {{ skill }}
+                                    </span>
+
+                                {% endfor %}
+
+                            </div>
+
+
+                            <h3>
+                                Learning Resources
+                            </h3>
+
+                            <div class="career-resources">
+
+                                {% for skill, links in career.resources.items() %}
+
+                                    <div class="skill-resource">
+
+                                        <strong>
+                                            {{ skill }}
+                                        </strong>
+
+                                        {% for resource in links %}
+
+                                            <a
+                                                href="{{ resource.url }}"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                {{ resource.name }}
+                                                →
+                                            </a>
+
+                                        {% endfor %}
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+
+                            <h3>
+                                Career Path
+                            </h3>
+
+                            <div class="career-path">
+
+                                {% for step in career.career_path %}
+
+                                    <span>
+                                        {{ step }}
+                                    </span>
+
+                                {% endfor %}
+
+                            </div>
+
+
+                            <a
+                                href="{{ url_for('career_details', job=career.title) }}"
+                                class="btn secondary"
+                            >
+                                View Career Details
+                            </a>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    <!-- ========================================================
+         CAREER DETAILS
+    ========================================================= -->
+
+    {% elif page == "career_details" %}
+
+        <section class="page-header">
+
+            <div class="container">
+
+                <span class="eyebrow">
+                    CAREER DETAILS
+                </span>
+
+                <h1>
+                    {{ career.title }}
+                </h1>
+
+                <p>
+                    {{ career.description }}
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="section">
+
+            <div class="container">
+
+                <div class="two-column">
+
+                    <div class="panel">
+
+                        <h2>
+                            Required Skills
+                        </h2>
+
+                        <div class="chips">
+
+                            {% for skill in career.skills %}
+
+                                <span class="chip">
+                                    {{ skill }}
+                                </span>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <h2>
+                            Salary
+                        </h2>
+
+                        <p class="large-text">
+                            {{ career.salary }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <h2>
+                        Learning Resources by Skill
+                    </h2>
+
+                    {% for skill, links in career_resources.items() %}
+
+                        <div class="resource-item">
+
+                            <h3>
+                                {{ skill }}
+                            </h3>
+
+                            <div class="resource-links">
+
+                                {% for resource in links %}
+
+                                    <a
+                                        href="{{ resource.url }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="resource-link"
+                                    >
+                                        {{ resource.name }}
+                                    </a>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <div class="panel">
+
+                    <h2>
+                        Career Progression
+                    </h2>
+
+                    <div class="career-path large">
+
+                        {% for step in career.career_path %}
+
+                            <span>
+                                {{ step }}
+                            </span>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+
+                <a
+                    href="{{ url_for('resume_analyzer') }}"
+                    class="btn primary"
+                >
+                    Analyze Resume for {{ career.title }}
+                </a>
+
+            </div>
+
+        </section>
+
+
+    <!-- ========================================================
+         LIVE JOBS
+    ========================================================= -->
+
+    {% elif page == "jobs" %}
+
+        <section class="page-header">
+
+            <div class="container">
+
+                <span class="eyebrow">
+                    LIVE JOB SEARCH
+                </span>
+
+                <h1>
+                    Find Relevant Jobs
+                </h1>
+
+                <p>
+                    Search current listings by career, skill and
+                    Kerala district.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="section">
+
+            <div class="container">
+
+                <form
+                    method="GET"
+                    action="{{ url_for('live_jobs') }}"
+                    class="panel job-search-form"
+                >
+
+                    <div class="two-column">
+
+                        <div class="form-group">
+
+                            <label for="job-query">
+                                Job Title / Skill
+                            </label>
+
+                            <select
+                                name="q"
+                                id="job-query"
+                            >
+
+                                <option value="">
+                                    Select Job / Skill
+                                </option>
+
+                                {% for job in careers %}
+
+                                    <option
+                                        value="{{ job }}"
+                                        {% if query == job %}
+                                            selected
+                                        {% endif %}
+                                    >
+                                        {{ job }}
+                                    </option>
+
+                                {% endfor %}
+
+                                <option value="Python">
+                                    Python
+                                </option>
+
+                                <option value="SQL">
+                                    SQL
+                                </option>
+
+                                <option value="Machine Learning">
+                                    Machine Learning
+                                </option>
+
+                                <option value="Data Science">
+                                    Data Science
+                                </option>
+
+                                <option value="Artificial Intelligence">
+                                    Artificial Intelligence
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="job-location">
+                                Location
+                            </label>
+
+                            <select
+                                name="location"
+                                id="job-location"
+                            >
+
+                                <option value="">
+                                    All Kerala
+                                </option>
+
+                                {% for district in kerala_districts %}
+
+                                    <option
+                                        value="{{ district }}"
+                                        {% if location == district %}
+                                            selected
+                                        {% endif %}
+                                    >
+                                        {{ district }}
+                                    </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn primary"
+                    >
+                        Search Live Jobs
+                    </button>
+
+                </form>
+
+
+                {% if jobs_message %}
+
+                    <div class="job-message">
+                        {{ jobs_message }}
+                    </div>
+
+                {% endif %}
+
+
+                {% if not job_provider_status.configured %}
+
+                    <div class="flash warning">
+
+                        <strong>
+                            Live jobs are not configured.
+                        </strong>
+
+                        <br>
+
+                        Add these values to your
+                        <code>.env</code> file:
+
+                        <br><br>
+
+                        <code>
+                            ADZUNA_APP_ID=your_app_id
+                        </code>
+
+                        <br>
+
+                        <code>
+                            ADZUNA_APP_KEY=your_app_key
+                        </code>
+
+                    </div>
+
+                {% endif %}
+
+
+                {% if jobs %}
+
+                    <div class="jobs-grid">
+
+                        {% for job in jobs %}
+
+                            <article class="job-card">
+
+                                <div class="job-card-header">
+
+                                    <span class="job-badge">
+                                        LIVE
+                                    </span>
+
+                                    <h2>
+                                        {{ job.title }}
+                                    </h2>
+
+                                </div>
+
+
+                                <p class="job-company">
+                                    {{ job.company }}
+                                </p>
+
+
+                                <p class="job-location">
+                                    📍 {{ job.location }}
+                                </p>
+
+
+                                {% if job.salary %}
+
+                                    <p class="job-salary">
+                                        💰 {{ job.salary }}
+                                    </p>
+
+                                {% endif %}
+
+
+                                {% if job.description %}
+
+                                    <p class="job-description">
+                                        {{ job.description[:500] }}
+                                        {% if job.description|length > 500 %}
+                                            ...
+                                        {% endif %}
+                                    </p>
+
+                                {% endif %}
+
+
+                                {% if job.url %}
+
+                                    <a
+                                        href="{{ job.url }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="btn primary"
+                                    >
+                                        View Job
+                                    </a>
+
+                                {% endif %}
+
+                            </article>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% elif query %}
+
+                    <div class="empty-state">
+
+                        <h2>
+                            No jobs found
+                        </h2>
+
+                        <p>
+                            Try another job title, skill or district.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+    <!-- ========================================================
+         LOGIN
+    ========================================================= -->
+
+    {% elif page == "login" %}
+
+        <section class="auth-section">
+
+            <div class="auth-card">
+
+                <span class="eyebrow">
+                    ACCOUNT
+                </span>
+
+                <h1>
+                    Welcome Back
+                </h1>
+
+                <p>
+                    Log in to access your analysis history.
+                </p>
+
+
+                <form
+                    method="POST"
+                    class="form-panel"
+                >
+
+                    <div class="form-group">
+
+                        <label for="login-email">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            id="login-email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="login-password">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            name="password"
+                            id="login-password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn primary full"
+                    >
+                        Login
+                    </button>
+
+                </form>
+
+
+                <p class="auth-footer">
+                    Don't have an account?
+
+                    <a href="{{ url_for('register') }}">
+                        Create one
+                    </a>
+                </p>
+
+            </div>
+
+        </section>
+
+
+    <!-- ========================================================
+         REGISTER
+    ========================================================= -->
+
+    {% elif page == "register" %}
+
+        <section class="auth-section">
+
+            <div class="auth-card">
+
+                <span class="eyebrow">
+                    ACCOUNT
+                </span>
+
+                <h1>
+                    Create Account
+                </h1>
+
+                <p>
+                    Save your career analysis history.
+                </p>
+
+
+                <form
+                    method="POST"
+                    class="form-panel"
+                >
+
+                    <div class="form-group">
+
+                        <label for="register-name">
+                            Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="name"
+                            id="register-name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="register-email">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            id="register-email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="register-password">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            name="password"
+                            id="register-password"
+                            minlength="6"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn primary full"
+                    >
+                        Create Account
+                    </button>
+
+                </form>
+
+
+                <p class="auth-footer">
+
+                    Already have an account?
+
+                    <a href="{{ url_for('login') }}">
+                        Login
+                    </a>
+
+                </p>
+
+            </div>
+
+        </section>
+
+
+    <!-- ========================================================
+         HISTORY
+    ========================================================= -->
+
+    {% elif page == "history" %}
+
+        <section class="page-header">
+
+            <div class="container">
+
+                <span class="eyebrow">
+                    YOUR HISTORY
+                </span>
+
+                <h1>
+                    Analysis History
+                </h1>
+
+                <p>
+                    Previous resume analyses saved to your account.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="section">
+
+            <div class="container">
+
+                {% if history %}
+
+                    <div class="history-table-wrapper">
+
+                        <table class="history-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Date
+                                    </th>
+
+                                    <th>
+                                        Career
+                                    </th>
+
+                                    <th>
+                                        Resume
+                                    </th>
+
+                                    <th>
+                                        Readiness
+                                    </th>
+
+                                    <th>
+                                        ATS
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                {% for item in history %}
+
+                                    <tr>
+
+                                        <td>
+                                            {{ item.created_at }}
+                                        </td>
+
+                                        <td>
+                                            {{ item.target_job }}
+                                        </td>
+
+                                        <td>
+                                            {{ item.filename }}
+                                        </td>
+
+                                        <td>
+                                            {{ item.readiness_score }}%
+                                        </td>
+
+                                        <td>
+                                            {{ item.ats_score }}%
+                                        </td>
+
+                                    </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="empty-state">
+
+                        <h2>
+                            No analyses yet
+                        </h2>
+
+                        <p>
+                            Upload a resume to create your first
+                            career analysis.
+                        </p>
+
+                        <a
+                            href="{{ url_for('resume_analyzer') }}"
+                            class="btn primary"
+                        >
+                            Analyze Resume
+                        </a>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+    <!-- ========================================================
+         ABOUT
+    ========================================================= -->
+
+    {% elif page == "about" %}
+
+        <section class="page-header">
+
+            <div class="container">
+
+                <span class="eyebrow">
+                    ABOUT THE PROJECT
+                </span>
+
+                <h1>
+                    AI-Powered Career Skill Gap Analyzer
+                </h1>
+
+                <p>
+                    A career intelligence platform designed to help
+                    users understand their current skills and prepare
+                    for relevant career opportunities.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="section">
+
+            <div class="container">
+
+                <div class="two-column">
+
+                    <div class="panel">
+
+                        <h2>
+                            Resume Analysis
+                        </h2>
+
+                        <p>
+                            Analyze PDF, DOCX and image-based resumes,
+                            identify relevant skills and compare them
+                            with career requirements.
+                        </p>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <h2>
+                            Career Analysis
+                        </h2>
+
+                        <p>
+                            Explore career requirements, missing skills,
+                            roadmaps and learning resources.
+                        </p>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <h2>
+                            AI Assistance
+                        </h2>
+
+                        <p>
+                            Optional AI analysis and resume rewriting
+                            are available when an OpenAI API key is
+                            configured.
+                        </p>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <h2>
+                            Live Jobs
+                        </h2>
+
+                        <p>
+                            Search live job listings through the
+                            configured Adzuna integration.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    <!-- ========================================================
+         404
+    ========================================================= -->
+
+    {% elif page == "404" %}
+
+        <section class="empty-state page-error">
+
+            <div class="container">
+
+                <h1>
+                    404
+                </h1>
+
+                <h2>
+                    Page Not Found
+                </h2>
+
+                <p>
+                    The page you requested does not exist.
+                </p>
+
+                <a
+                    href="{{ url_for('home') }}"
+                    class="btn primary"
+                >
+                    Back Home
+                </a>
+
+            </div>
+
+        </section>
+
+
+    <!-- ========================================================
+         500
+    ========================================================= -->
+
+    {% elif page == "500" %}
+
+        <section class="empty-state page-error">
+
+            <div class="container">
+
+                <h1>
+                    500
+                </h1>
+
+                <h2>
+                    Something Went Wrong
+                </h2>
+
+                <p>
+                    {{ error|default("An unexpected error occurred.") }}
+                </p>
+
+                <a
+                    href="{{ url_for('home') }}"
+                    class="btn primary"
+                >
+                    Back Home
+                </a>
+
+            </div>
+
+        </section>
+
+
+    {% else %}
+
+        <section class="empty-state">
+
+            <div class="container">
+
+                <h1>
+                    Welcome
+                </h1>
+
+                <p>
+                    Select an option from the navigation menu.
+                </p>
+
+                <a
+                    href="{{ url_for('home') }}"
+                    class="btn primary"
+                >
+                    Home
+                </a>
+
+            </div>
+
+        </section>
+
+    {% endif %}
+
+</main>
+
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+
+<footer class="footer">
+
+    <div class="container footer-inner">
+
+        <div>
+
+            <strong>
+                AI-Powered Career Skill Gap Analyzer
+            </strong>
+
+            <p>
+                Analyze. Improve. Learn. Apply.
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <a href="{{ url_for('home') }}">
+                Home
+            </a>
+
+            <a href="{{ url_for('resume_analyzer') }}">
+                Resume Analyzer
+            </a>
+
+            <a href="{{ url_for('careers_resources') }}">
+                Careers &amp; Resources
+            </a>
+
+            <a href="{{ url_for('live_jobs') }}">
+                Live Jobs
+            </a>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* ----------------------------------------------------------
+       Skill search
+    ---------------------------------------------------------- */
+
+    const skillSearch =
+        document.getElementById("skill-search");
+
+    const skillOptions =
+        document.querySelectorAll(".skill-option");
+
+
+    if (skillSearch) {
+
+        skillSearch.addEventListener(
+            "input",
+            function () {
+
+                const query =
+                    skillSearch.value
+                        .toLowerCase()
+                        .trim();
+
+                skillOptions.forEach(function (option) {
+
+                    const skill =
+                        option
+                            .getAttribute("data-skill")
+                            .toLowerCase();
+
+                    if (
+                        !query ||
+                        skill.includes(query)
+                    ) {
+
+                        option.style.display = "";
+
+                    } else {
+
+                        option.style.display = "none";
+
+                    }
+
+                });
+
+            }
+        );
+
+    }
+
+
+    /* ----------------------------------------------------------
+       Select all skills
+    ---------------------------------------------------------- */
+
+    const selectAll =
+        document.getElementById(
+            "select-all-skills"
+        );
+
+    if (selectAll) {
+
+        selectAll.addEventListener(
+            "click",
+            function () {
+
+                document
+                    .querySelectorAll(
+                        ".skill-option input[type='checkbox']"
+                    )
+                    .forEach(function (checkbox) {
+
+                        checkbox.checked = true;
+
+                    });
+
+            }
+        );
+
+    }
+
+
+    /* ----------------------------------------------------------
+       Clear skills
+    ---------------------------------------------------------- */
+
+    const clearSkills =
+        document.getElementById(
+            "clear-skills"
+        );
+
+    if (clearSkills) {
+
+        clearSkills.addEventListener(
+            "click",
+            function () {
+
+                document
+                    .querySelectorAll(
+                        ".skill-option input[type='checkbox']"
+                    )
+                    .forEach(function (checkbox) {
+
+                        checkbox.checked = false;
+
+                    });
+
+            }
+        );
+
+    }
+
+
+    /* ----------------------------------------------------------
+       AI Resume Rewrite
+    ---------------------------------------------------------- */
+
+    const rewriteButton =
+        document.getElementById(
+            "rewrite-resume-btn"
+        );
+
+    const rewriteLoading =
+        document.getElementById(
+            "rewrite-loading"
+        );
+
+    const rewriteError =
+        document.getElementById(
+            "rewrite-error"
+        );
+
+    const rewriteResult =
+        document.getElementById(
+            "rewrite-result"
+        );
+
+    const resumeText =
+        document.getElementById(
+            "rewrite-resume-text"
+        );
+
+    const targetJob =
+        document.getElementById(
+            "rewrite-target-job"
+        );
+
+    const jobDescription =
+        document.getElementById(
+            "rewrite-job-description"
+        );
+
+
+    if (rewriteButton) {
+
+        rewriteButton.addEventListener(
+            "click",
+            async function () {
+
+                if (
+                    !resumeText ||
+                    !resumeText.value.trim()
+                ) {
+
+                    showRewriteError(
+                        "Resume text is not available."
+                    );
+
+                    return;
+
+                }
+
+
+                rewriteButton.disabled = true;
+
+                if (rewriteLoading) {
+
+                    rewriteLoading.classList.remove(
+                        "hidden"
+                    );
+
+                }
+
+                if (rewriteError) {
+
+                    rewriteError.classList.add(
+                        "hidden"
+                    );
+
+                }
+
+                if (rewriteResult) {
+
+                    rewriteResult.classList.add(
+                        "hidden"
+                    );
+
+                }
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "/rewrite",
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body: JSON.stringify({
+                                    resume_text:
+                                        resumeText.value,
+
+                                    target_job:
+                                        targetJob
+                                            ? targetJob.value
+                                            : "",
+
+                                    job_description:
+                                        jobDescription
+                                            ? jobDescription.value
+                                            : ""
+                                })
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            data.error ||
+                            "Resume rewriting failed."
+                        );
+
+                    }
+
+
+                    renderRewriteResult(
+                        data
+                    );
+
+
+                } catch (error) {
+
+                    showRewriteError(
+                        error.message ||
+                        "Could not rewrite the resume."
+                    );
+
+                } finally {
+
+                    rewriteButton.disabled = false;
+
+                    if (rewriteLoading) {
+
+                        rewriteLoading.classList.add(
+                            "hidden"
+                        );
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* ----------------------------------------------------------
+       Rewrite error
+    ---------------------------------------------------------- */
+
+    function showRewriteError(message) {
+
+        if (!rewriteError) {
+            return;
+        }
+
+        rewriteError.textContent = message;
+
+        rewriteError.classList.remove(
+            "hidden"
+        );
+
+    }
+
+
+    /* ----------------------------------------------------------
+       Escape HTML
+    ---------------------------------------------------------- */
+
+    function escapeHtml(value) {
+
+        if (
+            value === null ||
+            value === undefined
+        ) {
+
+            return "";
+
+        }
+
+        const element =
+            document.createElement(
+                "div"
+            );
+
+        element.textContent =
+            String(value);
+
+        return element.innerHTML;
+
+    }
+
+
+    /* ----------------------------------------------------------
+       Render rewritten resume
+    ---------------------------------------------------------- */
+
+    function renderRewriteResult(data) {
+
+        if (!rewriteResult) {
+            return;
+        }
+
+
+        let html = "";
+
+
+        if (data.professional_summary) {
+
+            html +=
+                "<div class='rewrite-section'>" +
+                "<h3>Professional Summary</h3>" +
+                "<p>" +
+                escapeHtml(
+                    data.professional_summary
+                ) +
+                "</p>" +
+                "</div>";
+
+        }
+
+
+        if (
+            Array.isArray(data.skills) &&
+            data.skills.length
+        ) {
+
+            html +=
+                "<div class='rewrite-section'>" +
+                "<h3>Skills</h3>" +
+                "<div class='chips'>";
+
+            data.skills.forEach(
+                function (skill) {
+
+                    html +=
+                        "<span class='chip'>" +
+                        escapeHtml(skill) +
+                        "</span>";
+
+                }
+            );
+
+            html +=
+                "</div></div>";
+
+        }
+
+
+        if (
+            Array.isArray(data.experience) &&
+            data.experience.length
+        ) {
+
+            html +=
+                "<div class='rewrite-section'>" +
+                "<h3>Experience</h3>";
+
+            data.experience.forEach(
+                function (experience) {
+
+                    html +=
+                        "<h4>" +
+                        escapeHtml(
+                            experience.role || ""
+                        ) +
+                        "</h4>";
+
+                    if (experience.company) {
+
+                        html +=
+                            "<p><strong>" +
+                            escapeHtml(
+                                experience.company
+                            ) +
+                            "</strong></p>";
+
+                    }
+
+                    if (
+                        Array.isArray(
+                            experience.bullets
+                        )
+                    ) {
+
+                        html += "<ul>";
+
+                        experience.bullets.forEach(
+                            function (bullet) {
+
+                                html +=
+                                    "<li>" +
+                                    escapeHtml(
+                                        bullet
+                                    ) +
+                                    "</li>";
+
+                            }
+                        );
+
+                        html += "</ul>";
+
+                    }
+
+                }
+            );
+
+            html +=
+                "</div>";
+
+        }
+
+
+        if (
+            Array.isArray(data.projects) &&
+            data.projects.length
+        ) {
+
+            html +=
+                "<div class='rewrite-section'>" +
+                "<h3>Projects</h3>";
+
+            data.projects.forEach(
+                function (project) {
+
+                    html +=
+                        "<h4>" +
+                        escapeHtml(
+                            project.name || ""
+                        ) +
+                        "</h4>";
+
+                    if (
+                        Array.isArray(
+                            project.bullets
+                        )
+                    ) {
+
+                        html += "<ul>";
+
+                        project.bullets.forEach(
+                            function (bullet) {
+
+                                html +=
+                                    "<li>" +
+                                    escapeHtml(
+                                        bullet
+                                    ) +
+                                    "</li>";
+
+                            }
+                        );
+
+                        html += "</ul>";
+
+                    }
+
+                }
+            );
+
+            html +=
+                "</div>";
+
+        }
+
+
+        if (
+            Array.isArray(data.education) &&
+            data.education.length
+        ) {
+
+            html +=
+                "<div class='rewrite-section'>" +
+                "<h3>Education</h3>";
+
+            data.education.forEach(
+                function (education) {
+
+                    html +=
+                        "<h4>" +
+                        escapeHtml(
+                            education.degree || ""
+                        ) +
+                        "</h4>";
+
+                    html +=
+                        "<p>" +
+                        escapeHtml(
+                            education.institution || ""
+                        ) +
+                        "</p>";
+
+                    if (education.details) {
+
+                        html +=
+                            "<p>" +
+                            escapeHtml(
+                                education.details
+                            ) +
+                            "</p>";
+
+                    }
+
+                }
+            );
+
+            html +=
+                "</div>";
+
+        }
+
+
+        if (!html) {
+
+            html =
+                "<p class='muted'>" +
+                "The AI did not return a formatted result." +
+                "</p>";
+
+        }
+
+
+        rewriteResult.innerHTML = html;
+
+        rewriteResult.classList.remove(
+            "hidden"
+        );
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
