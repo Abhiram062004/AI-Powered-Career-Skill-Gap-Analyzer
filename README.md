@@ -1,188 +1,102 @@
+# 🎯 AI-Powered Career Skill Gap Analyzer
 
+A Flask web application that analyzes a resume against a target career, identifies matched and missing skills, calculates an ATS/readiness score, and helps users close their skill gaps — with optional AI-powered analysis, AI resume rewriting, and live job search for Kerala, India.
 
-# AI-Powered Career Skill Gap Analyzer 🚀
+## ✨ Features
 
-An AI-powered web application that helps students and job seekers analyze their resumes, identify career skill gaps, measure ATS and career readiness, and discover personalized learning resources and job opportunities.
+- **Resume Upload & Parsing** — Supports PDF, DOCX, PNG, JPG, and JPEG resumes, with OCR fallback for scanned documents (Tesseract).
+- **Skill Gap Analysis** — Deterministic rule-based analyzer that matches resume content against required skills for a chosen career.
+- **ATS & Readiness Scoring** — Quantifies how well a resume aligns with a target role.
+- **Optional AI Analysis** — Uses OpenAI (if configured) to generate strengths, gaps, recommendations, and interview focus areas, with a rule-based fallback when no API key is set.
+- **AI Resume Rewriting** — Rewrites resume content for a target role without fabricating experience or skills.
+- **Live Job Search** — Integrates with the Adzuna Jobs API to search current openings across Kerala districts.
+- **Careers & Learning Resources** — Browse career profiles with required skills and curated learning resources.
+- **User Accounts & History** — Register/login and keep a history of past analyses (SQLite database).
 
----
+## 🛠️ Tech Stack
 
-## 📌 About the Project
+- **Backend:** Python, Flask
+- **Database:** SQLite
+- **Resume Parsing:** PyPDF2, python-docx, Pillow, pytesseract, pdf2image
+- **AI:** OpenAI API (optional)
+- **Live Jobs:** Adzuna Jobs API (optional)
+- **Auth:** Werkzeug password hashing
 
-The **AI-Powered Career Skill Gap Analyzer** compares a user's existing skills with the skills required for a selected career role.
+## 📁 Project Structure
 
-The application analyzes an uploaded resume, identifies matched and missing skills, calculates an ATS score and career readiness score, and generates a personalized roadmap to help the user prepare for their target career.
+```
+.
+├── app.py                # Main Flask application & routes
+├── analyzer.py            # Deterministic skill-gap / ATS analysis engine
+├── career_data.py         # Career profiles & learning resource links
+├── database.py             # SQLite setup, users & analysis history
+├── job_provider.py         # Adzuna live job search integration
+├── llm_analyzer.py         # Optional OpenAI-powered analysis & resume rewriting
+├── resume_utils.py         # Resume text extraction (PDF/DOCX/Image + OCR)
+├── skills_data.py          # Job-to-skill mappings, categories & aliases
+├── requirements.txt
+├── .env.example             # Example environment configuration
+└── .gitignore
+```
 
-The application also provides career-specific learning resources and live job opportunities.
+## ⚙️ Prerequisites
 
----
+- Python 3.10+
+- [Tesseract OCR](https://github.com/tesseract-ocr/tesseract) installed on your system (for scanned PDF / image resumes)
+- [Poppler](https://poppler.freedesktop.org/) installed (required by `pdf2image` for scanned PDF OCR)
 
-## ✨ Key Features
+## 🚀 Getting Started
 
-### 📄 Resume Analysis
-- Upload resumes in PDF, DOCX, PNG, JPG, or JPEG format.
-- Extract resume text automatically.
-- Detect technical and career-related skills.
-- Compare resume skills with target career requirements.
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/<your-username>/<your-repo>.git
+   cd <your-repo>
+   ```
 
-### 🎯 Skill Gap Analysis
-- Select a target career.
-- Select specific skills manually.
-- Add additional skills.
-- Identify matched skills.
-- Identify missing skills.
-- Highlight evidence found in the resume.
+2. **Create a virtual environment**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate      # On Windows: venv\Scripts\activate
+   ```
 
-### 📊 ATS Analysis
-- Generate an ATS score.
-- Analyze resume skill relevance.
-- Identify missing skills that may improve career alignment.
-- Provide suggestions for improving the resume.
+3. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### 🧠 AI-Powered Analysis
-When an OpenAI API key is configured, the application can provide:
-- AI-based resume insights
-- Personalized recommendations
-- Career-specific analysis
-- AI-assisted resume rewriting
+4. **Configure environment variables**
+   ```bash
+   cp .env.example .env
+   ```
+   Then edit `.env` and fill in the values (see [Environment Variables](#-environment-variables) below).
 
-### ✍️ AI Resume Rewriting
-Improve resume wording while preserving the original facts.
+5. **Run the application**
+   ```bash
+   python app.py
+   ```
+   The app will be available at `http://127.0.0.1:5000`.
 
-The AI rewriting feature is designed to:
-- Improve clarity
-- Improve professional wording
-- Strengthen resume descriptions
-- Preserve existing information
-- Avoid inventing qualifications or experience
+## 🔐 Environment Variables
 
-### 🗺️ Career Roadmap
-Generate a structured learning roadmap based on:
-- Current skills
-- Missing skills
-- Target career
-- Skill priorities
+Create a `.env` file in the project root (use `.env.example` as a template):
 
-### 📚 Careers & Resources
-Explore different technology and data-related careers.
+| Variable | Required | Description |
+|---|---|---|
+| `FLASK_SECRET_KEY` | Recommended | Secret key for session security. Use a long random string. |
+| `OPENAI_API_KEY` | Optional | Enables AI-powered analysis and resume rewriting. Falls back to the rule-based analyzer if empty. |
+| `OPENAI_MODEL` | Optional | OpenAI model name to use (defaults to a preset value). |
+| `ADZUNA_APP_ID` | Optional | Enables the Live Jobs feature via the Adzuna API. |
+| `ADZUNA_APP_KEY` | Optional | Adzuna API key, used together with `ADZUNA_APP_ID`. |
+| `ADZUNA_COUNTRY` | Optional | Country code for Adzuna search (defaults to `in` for India). |
 
-Each career includes:
-- Required skills
-- Skill categories
-- Learning resources
-- Free learning links
-- YouTube resources
+> The app works fully without `OPENAI_API_KEY` or Adzuna credentials — those features simply show a "not configured" message instead of crashing.
 
-### 💼 Live Job Search
-Search current job opportunities using the Adzuna Jobs API.
+## 📌 Notes
 
-The job search supports:
-- Job title selection
-- Skill-based search
-- Kerala locations
-- All Kerala
-- Kerala districts
-- Company information
-- Job descriptions
-- Salary information when available
-- Direct job links
+- `career_analyzer.db` is the local SQLite database. It's included here for convenience but is typically excluded from version control (see `.gitignore`) so each deployment starts fresh — delete it locally if you want a clean database, it will be recreated automatically on first run.
+- Never commit your real `.env` file or API keys — only `.env.example` should be tracked in git.
 
-### 👤 User Accounts
-Users can:
-- Register
-- Log in
-- Log out
-- Save resume analyses
-- View previous analyses
-- Delete saved analyses
+👨‍💻 Author
 
-### 📜 Analysis History
-Logged-in users can view previous resume analyses and review their results later.
-
----
-
-## 🛠️ Technologies Used
-
-### Backend
-- Python
-- Flask
-- SQLite
-
-### AI
-- OpenAI API
-
-### Resume Processing
-- PyPDF2
-- python-docx
-- Pillow
-- Tesseract OCR
-- pdf2image
-
-### Frontend
-- HTML5
-- CSS3
-- JavaScript
-- Jinja2
-
-### APIs
-- OpenAI API
-- Adzuna Jobs API
-
----
-
-## 🧩 Supported Career Roles
-
-The application currently supports career analysis for roles including:
-
-- Data Analyst
-- Junior Data Analyst
-- Business Intelligence Analyst
-- Data Scientist
-- Junior Data Scientist
-- Machine Learning Engineer
-- Junior Machine Learning Engineer
-- AI Engineer
-- Deep Learning Engineer
-- Data Engineer
-- Python Developer
-- Data Science Intern
-- Machine Learning Intern
-
----
-
-## 🔄 How It Works
-
-```text
-             Resume Upload
-                   │
-                   ▼
-          Resume Text Extraction
-                   │
-                   ▼
-             Skill Detection
-                   │
-                   ▼
-          Select Target Career
-                   │
-                   ▼
-          Compare Required Skills
-                   │
-          ┌────────┴────────┐
-          ▼                 ▼
-    Matched Skills     Missing Skills
-          │                 │
-          └────────┬────────┘
-                   ▼
-             ATS Analysis
-                   │
-                   ▼
-        Career Readiness Score
-                   │
-                   ▼
-          Personalized Suggestions
-                   │
-          ┌────────┴────────┐
-          ▼                 ▼
-   Career Roadmap      Learning Resources
-                   │
-                   ▼
-            Optional AI Analysis
+Abhiram P S
+B.Tech – Artificial Intelligence and Machine Learning
