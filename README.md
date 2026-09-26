@@ -1,48 +1,188 @@
-# CareerSkillAI 🚀
 
-### AI-Powered Career Skill Gap Analyzer
 
-CareerSkillAI is a web-based AI application designed to help students and job seekers identify the skills they need for their target career. The system compares a user's existing skills with the required skills for different job roles, detects skill gaps, calculates a career readiness score, and provides personalized learning recommendations.
+# AI-Powered Career Skill Gap Analyzer 🚀
+
+An AI-powered web application that helps students and job seekers analyze their resumes, identify career skill gaps, measure ATS and career readiness, and discover personalized learning resources and job opportunities.
+
+---
+
+## 📌 About the Project
+
+The **AI-Powered Career Skill Gap Analyzer** compares a user's existing skills with the skills required for a selected career role.
+
+The application analyzes an uploaded resume, identifies matched and missing skills, calculates an ATS score and career readiness score, and generates a personalized roadmap to help the user prepare for their target career.
+
+The application also provides career-specific learning resources and live job opportunities.
+
+---
 
 ## ✨ Key Features
 
-* 🎯 **Career Selection** – Explore different technology and data-related career paths.
-* 🔍 **Skill Gap Analysis** – Identify missing skills based on selected job roles.
-* 📊 **Career Readiness Score** – Measure how closely your current skills match the target role.
-* 🤖 **AI-Based Skill Matching** – Uses TF-IDF and Cosine Similarity for skill matching.
-* 📚 **Learning Resources** – Get structured courses and beginner-friendly resources for missing skills.
-* 🗺️ **Career Roadmaps** – Follow a step-by-step learning path toward your selected career.
-* 📄 **Resume Analysis** – Upload a PDF resume and extract relevant skills for analysis.
-* 💼 **Career Information** – Explore job descriptions, required skills, salary ranges, companies, and career growth paths.
+### 📄 Resume Analysis
+- Upload resumes in PDF, DOCX, PNG, JPG, or JPEG format.
+- Extract resume text automatically.
+- Detect technical and career-related skills.
+- Compare resume skills with target career requirements.
+
+### 🎯 Skill Gap Analysis
+- Select a target career.
+- Select specific skills manually.
+- Add additional skills.
+- Identify matched skills.
+- Identify missing skills.
+- Highlight evidence found in the resume.
+
+### 📊 ATS Analysis
+- Generate an ATS score.
+- Analyze resume skill relevance.
+- Identify missing skills that may improve career alignment.
+- Provide suggestions for improving the resume.
+
+### 🧠 AI-Powered Analysis
+When an OpenAI API key is configured, the application can provide:
+- AI-based resume insights
+- Personalized recommendations
+- Career-specific analysis
+- AI-assisted resume rewriting
+
+### ✍️ AI Resume Rewriting
+Improve resume wording while preserving the original facts.
+
+The AI rewriting feature is designed to:
+- Improve clarity
+- Improve professional wording
+- Strengthen resume descriptions
+- Preserve existing information
+- Avoid inventing qualifications or experience
+
+### 🗺️ Career Roadmap
+Generate a structured learning roadmap based on:
+- Current skills
+- Missing skills
+- Target career
+- Skill priorities
+
+### 📚 Careers & Resources
+Explore different technology and data-related careers.
+
+Each career includes:
+- Required skills
+- Skill categories
+- Learning resources
+- Free learning links
+- YouTube resources
+
+### 💼 Live Job Search
+Search current job opportunities using the Adzuna Jobs API.
+
+The job search supports:
+- Job title selection
+- Skill-based search
+- Kerala locations
+- All Kerala
+- Kerala districts
+- Company information
+- Job descriptions
+- Salary information when available
+- Direct job links
+
+### 👤 User Accounts
+Users can:
+- Register
+- Log in
+- Log out
+- Save resume analyses
+- View previous analyses
+- Delete saved analyses
+
+### 📜 Analysis History
+Logged-in users can view previous resume analyses and review their results later.
+
+---
 
 ## 🛠️ Technologies Used
 
-* **Python**
-* **Flask**
-* **Scikit-learn**
-* **TF-IDF**
-* **Cosine Similarity**
-* **PyPDF2**
-* **HTML**
-* **CSS**
-* **JavaScript**
+### Backend
+- Python
+- Flask
+- SQLite
 
-## ⚙️ How It Works
+### AI
+- OpenAI API
 
-1. Select a target career or provide your existing skills.
-2. The system identifies the skills required for the selected career.
-3. Your skills are compared with the required skills.
-4. TF-IDF and Cosine Similarity are used for skill matching.
-5. Missing skills are identified and prioritized.
-6. A career readiness score is generated.
-7. The system recommends learning resources and a career roadmap.
+### Resume Processing
+- PyPDF2
+- python-docx
+- Pillow
+- Tesseract OCR
+- pdf2image
 
-## 🎓 Purpose
+### Frontend
+- HTML5
+- CSS3
+- JavaScript
+- Jinja2
 
-CareerSkillAI helps students and aspiring professionals understand where they currently stand in their career journey and what they should learn next to become better prepared for their desired job role.
+### APIs
+- OpenAI API
+- Adzuna Jobs API
 
-## 👨‍💻 Author
+---
 
-**Abhiram P S**
+## 🧩 Supported Career Roles
 
-B.Tech – Artificial Intelligence & Machine Learning
+The application currently supports career analysis for roles including:
+
+- Data Analyst
+- Junior Data Analyst
+- Business Intelligence Analyst
+- Data Scientist
+- Junior Data Scientist
+- Machine Learning Engineer
+- Junior Machine Learning Engineer
+- AI Engineer
+- Deep Learning Engineer
+- Data Engineer
+- Python Developer
+- Data Science Intern
+- Machine Learning Intern
+
+---
+
+## 🔄 How It Works
+
+```text
+             Resume Upload
+                   │
+                   ▼
+          Resume Text Extraction
+                   │
+                   ▼
+             Skill Detection
+                   │
+                   ▼
+          Select Target Career
+                   │
+                   ▼
+          Compare Required Skills
+                   │
+          ┌────────┴────────┐
+          ▼                 ▼
+    Matched Skills     Missing Skills
+          │                 │
+          └────────┬────────┘
+                   ▼
+             ATS Analysis
+                   │
+                   ▼
+        Career Readiness Score
+                   │
+                   ▼
+          Personalized Suggestions
+                   │
+          ┌────────┴────────┐
+          ▼                 ▼
+   Career Roadmap      Learning Resources
+                   │
+                   ▼
+            Optional AI Analysis
