@@ -1,8 +1,8 @@
-# 🎯 AI-Powered Career Skill Gap Analyzer
+# AI-Powered Career Skill Gap Analyzer
 
 A Flask web application that analyzes a resume against a target career, identifies matched and missing skills, calculates an ATS/readiness score, and helps users close their skill gaps — with optional AI-powered analysis, AI resume rewriting, and live job search for Kerala, India.
 
-## ✨ Features
+## Features
 
 - **Resume Upload & Parsing** — Supports PDF, DOCX, PNG, JPG, and JPEG resumes, with OCR fallback for scanned documents (Tesseract).
 - **Skill Gap Analysis** — Deterministic rule-based analyzer that matches resume content against required skills for a chosen career.
@@ -13,7 +13,7 @@ A Flask web application that analyzes a resume against a target career, identifi
 - **Careers & Learning Resources** — Browse career profiles with required skills and curated learning resources.
 - **User Accounts & History** — Register/login and keep a history of past analyses (SQLite database).
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Backend:** Python, Flask
 - **Database:** SQLite
@@ -22,7 +22,7 @@ A Flask web application that analyzes a resume against a target career, identifi
 - **Live Jobs:** Adzuna Jobs API (optional)
 - **Auth:** Werkzeug password hashing
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 .
@@ -39,13 +39,13 @@ A Flask web application that analyzes a resume against a target career, identifi
 └── .gitignore
 ```
 
-## ⚙️ Prerequisites
+## Prerequisites
 
 - Python 3.10+
 - [Tesseract OCR](https://github.com/tesseract-ocr/tesseract) installed on your system (for scanned PDF / image resumes)
 - [Poppler](https://poppler.freedesktop.org/) installed (required by `pdf2image` for scanned PDF OCR)
 
-## 🚀 Getting Started
+## Getting Started
 
 1. **Clone the repository**
    ```bash
@@ -76,7 +76,7 @@ A Flask web application that analyzes a resume against a target career, identifi
    ```
    The app will be available at `http://127.0.0.1:5000`.
 
-## 🔐 Environment Variables
+## Environment Variables
 
 Create a `.env` file in the project root (use `.env.example` as a template):
 
@@ -91,12 +91,12 @@ Create a `.env` file in the project root (use `.env.example` as a template):
 
 > The app works fully without `OPENAI_API_KEY` or Adzuna credentials — those features simply show a "not configured" message instead of crashing.
 
-## 📌 Notes
+## Notes
 
 - `career_analyzer.db` is the local SQLite database. It's included here for convenience but is typically excluded from version control (see `.gitignore`) so each deployment starts fresh — delete it locally if you want a clean database, it will be recreated automatically on first run.
 - Never commit your real `.env` file or API keys — only `.env.example` should be tracked in git.
 
-👨‍💻 Author
+Author
 
 Abhiram P S
 B.Tech – Artificial Intelligence and Machine Learning
