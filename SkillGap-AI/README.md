@@ -1,4 +1,4 @@
-#  AI-Powered Career Skill Gap Analyzer
+# AI-Powered Career Skill Gap Analyzer
 
 A Flask web application that analyzes a resume against a target career, identifies matched and missing skills, calculates an ATS/readiness score, and helps users close their skill gaps — with optional AI-powered analysis, AI resume rewriting, and live job search for Kerala, India.
 
